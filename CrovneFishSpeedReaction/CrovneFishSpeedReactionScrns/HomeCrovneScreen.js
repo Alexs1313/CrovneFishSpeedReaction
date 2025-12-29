@@ -1,9 +1,9 @@
 import {
   View,
   Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
+  Image as CrovneImage,
+  TouchableOpacity as CrovneButton,
+  ScrollView as CrovneScrollWrap,
   Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -11,8 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const MenuItem = ({ icon, title, subtitle, onPress }) => (
-    <TouchableOpacity
+  const CrovneNavMenu = ({ icon, title, subtitle, onPress }) => (
+    <CrovneButton
       style={[
         {
           width: '50%',
@@ -31,7 +31,7 @@ const HomeScreen = () => {
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Image source={icon} style={{ marginBottom: 12 }} />
+      <CrovneImage source={icon} style={{ marginBottom: 12 }} />
 
       <Text
         style={{
@@ -54,7 +54,7 @@ const HomeScreen = () => {
       >
         {subtitle}
       </Text>
-    </TouchableOpacity>
+    </CrovneButton>
   );
 
   return (
@@ -65,7 +65,7 @@ const HomeScreen = () => {
         justifyContent: 'space-between',
       }}
     >
-      <ScrollView
+      <CrovneScrollWrap
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         bounces={false}
@@ -77,28 +77,28 @@ const HomeScreen = () => {
             flexWrap: 'wrap',
           }}
         >
-          <MenuItem
+          <CrovneNavMenu
             icon={require('../../assets/icons/famicons_game-controller.png')}
             title="Game"
             subtitle="Click the fish instantly and show the best time."
             onPress={() => navigation.navigate('ModeCrovneScreen')}
           />
 
-          <MenuItem
+          <CrovneNavMenu
             icon={require('../../assets/icons/uil_statistics.png')}
             title="Statistics"
             subtitle="View best reaction time and leaderboard."
             onPress={() => navigation.navigate('StatsCrovneScreen')}
           />
 
-          <MenuItem
+          <CrovneNavMenu
             icon={require('../../assets/icons/tabler_gift-filled.png')}
             title="Daily Wallpaper"
             subtitle="Try once a day and win a collectible card."
             onPress={() => navigation.navigate('DailyCrovneWallpaperScreen')}
           />
 
-          <MenuItem
+          <CrovneNavMenu
             icon={require('../../assets/icons/bxs_collection.png')}
             title="Collection"
             subtitle="Browse and download your wallpapers."
@@ -113,12 +113,12 @@ const HomeScreen = () => {
             top: '42%',
           }}
         >
-          <Image
+          <CrovneImage
             source={require('../../assets/images/homeBgGradient.png')}
             style={{ top: -50 }}
           />
 
-          <Image
+          <CrovneImage
             source={require('../../assets/images/homeLogo.png')}
             style={{
               position: 'absolute',
@@ -142,37 +142,37 @@ const HomeScreen = () => {
             backgroundColor: '#000',
           }}
         >
-          <TouchableOpacity
+          <CrovneButton
             onPress={() =>
               Linking.openURL(
                 'https://apps.apple.com/us/app/crovne-fish-speed-reaction/id6757163465',
               )
             }
           >
-            <Image
+            <CrovneImage
               source={require('../../assets/icons/material-symbols_star-rounded.png')}
             />
-          </TouchableOpacity>
+          </CrovneButton>
 
-          <TouchableOpacity
+          <CrovneButton
             onPress={() => navigation.navigate('AboutCrovneScreen')}
           >
-            <Image source={require('../../assets/icons/mdi_about.png')} />
-          </TouchableOpacity>
+            <CrovneImage source={require('../../assets/icons/mdi_about.png')} />
+          </CrovneButton>
 
-          <TouchableOpacity
+          <CrovneButton
             onPress={() =>
               Linking.openURL(
                 'https://apps.apple.com/us/app/crovne-fish-speed-reaction/id6757163465',
               )
             }
           >
-            <Image
+            <CrovneImage
               source={require('../../assets/icons/material-symbols_share.png')}
             />
-          </TouchableOpacity>
+          </CrovneButton>
         </View>
-      </ScrollView>
+      </CrovneScrollWrap>
     </View>
   );
 };

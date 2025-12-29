@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity as CrovneButton,
+  Image as CrovneImage,
+  ScrollView as CrovneScrollWrap,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { GRADIENT_COLORS } from '../consts';
 import { useState } from 'react';
@@ -15,7 +21,7 @@ const ModeCrovneScreen = () => {
         backgroundColor: '#000',
       }}
     >
-      <ScrollView
+      <CrovneScrollWrap
         contentContainerStyle={{
           flexGrow: 1,
           alignItems: 'center',
@@ -41,9 +47,11 @@ const ModeCrovneScreen = () => {
               justifyContent: 'space-between',
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
+            <CrovneButton onPress={() => navigation.goBack()}>
+              <CrovneImage
+                source={require('../../assets/images/backButton.png')}
+              />
+            </CrovneButton>
 
             <Text
               style={{
@@ -55,7 +63,7 @@ const ModeCrovneScreen = () => {
               Game
             </Text>
 
-            <Image source={require('../../assets/images/headLogo.png')} />
+            <CrovneImage source={require('../../assets/images/headLogo.png')} />
           </View>
         </LinearGradient>
 
@@ -79,18 +87,18 @@ const ModeCrovneScreen = () => {
             marginTop: 50,
           }}
         >
-          <TouchableOpacity
+          <CrovneButton
             activeOpacity={0.8}
             onPress={() => setCrovneFishMode('solo')}
           >
-            <Image
+            <CrovneImage
               source={
                 crovneFishMode === 'solo'
                   ? require('../../assets/images/checkedradiobtn.png')
                   : require('../../assets/images/radiobtn.png')
               }
             />
-          </TouchableOpacity>
+          </CrovneButton>
 
           <View
             style={{
@@ -140,18 +148,18 @@ const ModeCrovneScreen = () => {
             marginTop: 50,
           }}
         >
-          <TouchableOpacity
+          <CrovneButton
             activeOpacity={0.8}
             onPress={() => setCrovneFishMode('party')}
           >
-            <Image
+            <CrovneImage
               source={
                 crovneFishMode === 'party'
                   ? require('../../assets/images/checkedradiobtn.png')
                   : require('../../assets/images/radiobtn.png')
               }
             />
-          </TouchableOpacity>
+          </CrovneButton>
 
           <View
             style={{
@@ -192,7 +200,7 @@ const ModeCrovneScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity
+        <CrovneButton
           activeOpacity={0.85}
           style={{
             width: 281,
@@ -228,8 +236,8 @@ const ModeCrovneScreen = () => {
               Choose
             </Text>
           </LinearGradient>
-        </TouchableOpacity>
-      </ScrollView>
+        </CrovneButton>
+      </CrovneScrollWrap>
     </View>
   );
 };

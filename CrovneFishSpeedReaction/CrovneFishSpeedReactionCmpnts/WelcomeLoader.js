@@ -1,10 +1,37 @@
 import React from 'react';
-import { WebView } from 'react-native-webview';
-import { View, StyleSheet, Image } from 'react-native';
+import { WebView as CrovneWebView } from 'react-native-webview';
+import { View, StyleSheet, Image as CrovneImage } from 'react-native';
 import ScrollWrapper from './ScrollWrapper';
 
 const WelcomeLoader = () => {
-  const crovneLoader = `
+  return (
+    <ScrollWrapper>
+      <View style={styles.loaderContainer}>
+        <CrovneImage source={require('../../assets/images/loaderLogo.png')} />
+
+        <View style={{ position: 'absolute', bottom: 100 }}>
+          <CrovneWebView
+            originWhitelist={['*']}
+            source={{ html: crovneLoader }}
+            style={{ width: 220, height: 10, backgroundColor: 'transparent' }}
+            scrollEnabled={false}
+          />
+        </View>
+      </View>
+    </ScrollWrapper>
+  );
+};
+
+const styles = StyleSheet.create({
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 700,
+  },
+});
+
+const crovneLoader = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,32 +86,5 @@ const WelcomeLoader = () => {
 </body>
 </html>
 `;
-
-  return (
-    <ScrollWrapper>
-      <View style={styles.loaderContainer}>
-        <Image source={require('../../assets/images/loaderLogo.png')} />
-
-        <View style={{ position: 'absolute', bottom: 100 }}>
-          <WebView
-            originWhitelist={['*']}
-            source={{ html: crovneLoader }}
-            style={{ width: 220, height: 10, backgroundColor: 'transparent' }}
-            scrollEnabled={false}
-          />
-        </View>
-      </View>
-    </ScrollWrapper>
-  );
-};
-
-const styles = StyleSheet.create({
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 700,
-  },
-});
 
 export default WelcomeLoader;

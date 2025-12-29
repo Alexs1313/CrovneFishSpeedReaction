@@ -1,13 +1,13 @@
 import {
   View,
   Text,
-  TouchableOpacity,
+  TouchableOpacity as CrovneButton,
   Image,
   FlatList,
   Share,
   Platform,
   ImageBackground,
-  ScrollView,
+  ScrollView as CrovneScrollWrap,
 } from 'react-native';
 import { useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,27 +15,27 @@ import { useNavigation } from '@react-navigation/native';
 import { GRADIENT_COLORS } from '../consts';
 import { useStore } from '../CrovneFishSpeedReactionStore/context';
 
-const crovneFishSpeedReactionWallpapers = {
-  fish1: {
-    id: 'fish1',
-    image: require('../../assets/images/wallp1.png'),
-  },
-  fish2: {
-    id: 'fish2',
-    image: require('../../assets/images/wallp2.png'),
-  },
-  fish3: {
-    id: 'fish3',
-    image: require('../../assets/images/wallp3.png'),
-  },
-};
-
 const CollectionCrovneScreen = () => {
   const crovneFishSpeedReactionNavigation = useNavigation();
   const {
     crovneFishSpeedReactionUnlocked,
     crovneFishSpeedReactionLoadWallpapers,
   } = useStore();
+
+  const crovneFishSpeedReactionWallpapers = {
+    fish1: {
+      id: 'fish1',
+      image: require('../../assets/images/wallp1.png'),
+    },
+    fish2: {
+      id: 'fish2',
+      image: require('../../assets/images/wallp2.png'),
+    },
+    fish3: {
+      id: 'fish3',
+      image: require('../../assets/images/wallp3.png'),
+    },
+  };
 
   useEffect(() => {
     crovneFishSpeedReactionLoadWallpapers();
@@ -89,9 +89,7 @@ const CollectionCrovneScreen = () => {
               justifyContent: 'flex-end',
             }}
           >
-            <TouchableOpacity
-              onPress={() => crovneFishSpeedReactionOnShare(item)}
-            >
+            <CrovneButton onPress={() => crovneFishSpeedReactionOnShare(item)}>
               <ImageBackground
                 source={require('../../assets/images/shrBtn.png')}
                 style={{
@@ -111,7 +109,7 @@ const CollectionCrovneScreen = () => {
                   Share
                 </Text>
               </ImageBackground>
-            </TouchableOpacity>
+            </CrovneButton>
           </View>
         </ImageBackground>
       </View>
@@ -126,7 +124,7 @@ const CollectionCrovneScreen = () => {
         paddingTop: 60,
       }}
     >
-      <ScrollView
+      <CrovneScrollWrap
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
@@ -150,11 +148,11 @@ const CollectionCrovneScreen = () => {
               justifyContent: 'space-between',
             }}
           >
-            <TouchableOpacity
+            <CrovneButton
               onPress={() => crovneFishSpeedReactionNavigation.goBack()}
             >
               <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
+            </CrovneButton>
 
             <Text
               style={{
@@ -203,7 +201,7 @@ const CollectionCrovneScreen = () => {
             showsVerticalScrollIndicator={false}
           />
         )}
-      </ScrollView>
+      </CrovneScrollWrap>
     </View>
   );
 };

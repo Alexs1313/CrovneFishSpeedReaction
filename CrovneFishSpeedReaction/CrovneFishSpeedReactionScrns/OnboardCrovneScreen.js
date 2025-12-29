@@ -1,9 +1,9 @@
 import {
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
+  Image as CrovneImage,
+  ImageBackground as CrovneBackgroundImage,
+  Text as CrovneText,
+  TouchableOpacity as CrovneButton,
+  View as CrovneView,
 } from 'react-native';
 import ScrollWrapper from '../CrovneFishSpeedReactionCmpnts/ScrollWrapper';
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,7 +17,7 @@ const OnboardCrovneScreen = () => {
 
   return (
     <ScrollWrapper>
-      <View
+      <CrovneView
         style={{
           flex: 1,
           paddingTop: 40,
@@ -25,9 +25,9 @@ const OnboardCrovneScreen = () => {
           paddingBottom: 50,
         }}
       >
-        <Image source={require('../../assets/images/onboardLogo.png')} />
+        <CrovneImage source={require('../../assets/images/onboardLogo.png')} />
 
-        <Text
+        <CrovneText
           style={{
             fontSize: 24,
             fontFamily: 'Montserrat-SemiBold',
@@ -41,9 +41,9 @@ const OnboardCrovneScreen = () => {
             : currentCrovneIndex === 1
             ? 'Test Your Reaction'
             : 'Compete and Collect'}
-        </Text>
+        </CrovneText>
 
-        <ImageBackground
+        <CrovneBackgroundImage
           source={require('../../assets/images/bgGradient.png')}
           style={{
             width: 340,
@@ -54,26 +54,26 @@ const OnboardCrovneScreen = () => {
           }}
         >
           {currentCrovneIndex === 0 && (
-            <Image
+            <CrovneImage
               source={require('../../assets/images/onboardImg1.png')}
               style={{ bottom: 20 }}
             />
           )}
 
           {currentCrovneIndex === 1 && (
-            <Image
+            <CrovneImage
               source={require('../../assets/images/onboardImg2.png')}
               style={{ bottom: 60 }}
             />
           )}
 
           {currentCrovneIndex === 2 && (
-            <Image
+            <CrovneImage
               source={require('../../assets/images/onboardImg3.png')}
               style={{ top: 10 }}
             />
           )}
-        </ImageBackground>
+        </CrovneBackgroundImage>
 
         <LinearGradient
           colors={GRADIENT_COLORS}
@@ -84,7 +84,7 @@ const OnboardCrovneScreen = () => {
             bottom: 80,
           }}
         >
-          <View
+          <CrovneView
             style={{
               backgroundColor: '#000',
               margin: 1,
@@ -93,7 +93,7 @@ const OnboardCrovneScreen = () => {
               paddingLeft: 5,
             }}
           >
-            <Text
+            <CrovneText
               style={{
                 fontSize: 18,
                 fontFamily: 'Montserrat-SemiBold',
@@ -108,9 +108,9 @@ const OnboardCrovneScreen = () => {
               {currentCrovneIndex === 1 && 'I release a fish unexpectedly.'}
               {currentCrovneIndex === 2 &&
                 'Play alone or challenge your friends.'}
-            </Text>
+            </CrovneText>
 
-            <Text
+            <CrovneText
               style={{
                 fontSize: 14,
                 fontFamily: 'Montserrat-Regular',
@@ -132,9 +132,9 @@ The faster your reaction, the closer you are to the crown.`}
               {currentCrovneIndex === 2 &&
                 `Compare your reaction times, top the leaderboard.
 Test your luck every day and unlock collectible wallpapers.`}
-            </Text>
+            </CrovneText>
 
-            <TouchableOpacity
+            <CrovneButton
               onPress={() => {
                 if (currentCrovneIndex < 2) {
                   setCurrentCrovneIndex(currentCrovneIndex + 1);
@@ -143,7 +143,7 @@ Test your luck every day and unlock collectible wallpapers.`}
                 }
               }}
             >
-              <ImageBackground
+              <CrovneBackgroundImage
                 source={require('../../assets/images/onboardBtn.png')}
                 style={{
                   width: 165,
@@ -154,7 +154,7 @@ Test your luck every day and unlock collectible wallpapers.`}
                   alignItems: 'center',
                 }}
               >
-                <Text
+                <CrovneText
                   style={{
                     fontSize: 18,
                     fontFamily: 'Montserrat-SemiBold',
@@ -166,13 +166,13 @@ Test your luck every day and unlock collectible wallpapers.`}
                     : currentCrovneIndex === 1
                     ? 'Okay'
                     : 'Start'}
-                </Text>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
+                </CrovneText>
+              </CrovneBackgroundImage>
+            </CrovneButton>
+          </CrovneView>
         </LinearGradient>
 
-        <View
+        <CrovneView
           style={{
             flexDirection: 'row',
             gap: 8,
@@ -180,7 +180,7 @@ Test your luck every day and unlock collectible wallpapers.`}
           }}
         >
           {[1, 2, 3].map((_, index) => (
-            <Image
+            <CrovneImage
               key={index}
               source={
                 index === currentCrovneIndex
@@ -189,8 +189,8 @@ Test your luck every day and unlock collectible wallpapers.`}
               }
             />
           ))}
-        </View>
-      </View>
+        </CrovneView>
+      </CrovneView>
     </ScrollWrapper>
   );
 };

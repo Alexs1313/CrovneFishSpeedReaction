@@ -1,8 +1,8 @@
 import {
-  View,
+  View as CrovneMainBox,
   Text,
   TouchableOpacity,
-  ScrollView,
+  ScrollView as CrovneScrollWrap,
   Image,
   Share,
   ImageBackground,
@@ -84,8 +84,8 @@ const StatsCrovneScreen = () => {
     crovneFishSpeedReactionPartyList.some(party => party.bestTime !== null);
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000', paddingTop: 60 }}>
-      <ScrollView
+    <CrovneMainBox style={{ flex: 1, backgroundColor: '#000', paddingTop: 60 }}>
+      <CrovneScrollWrap
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
@@ -98,7 +98,7 @@ const StatsCrovneScreen = () => {
             marginBottom: 24,
           }}
         >
-          <View
+          <CrovneMainBox
             style={{
               backgroundColor: '#000',
               margin: 1,
@@ -124,10 +124,10 @@ const StatsCrovneScreen = () => {
               Statistics
             </Text>
             <Image source={require('../../assets/images/headLogo.png')} />
-          </View>
+          </CrovneMainBox>
         </LinearGradient>
 
-        <View
+        <CrovneMainBox
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -161,11 +161,11 @@ const StatsCrovneScreen = () => {
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </CrovneMainBox>
 
         {crovneFishSpeedReactionMode === 'solo' && (
           <>
-            <View
+            <CrovneMainBox
               style={{
                 width: '90%',
                 alignSelf: 'center',
@@ -200,7 +200,7 @@ const StatsCrovneScreen = () => {
                   : '0.000'}{' '}
                 sec.
               </Text>
-            </View>
+            </CrovneMainBox>
 
             {!crovneFishSpeedReactionSoloBest && (
               <Text
@@ -217,7 +217,7 @@ const StatsCrovneScreen = () => {
             )}
 
             {crovneFishSpeedReactionSoloBest && (
-              <View
+              <CrovneMainBox
                 style={{
                   width: '90%',
                   alignSelf: 'center',
@@ -252,7 +252,7 @@ const StatsCrovneScreen = () => {
                   {crovneFishSpeedReactionSoloBest.bestTime.toFixed(3)} sec.
                 </Text>
 
-                <View
+                <CrovneMainBox
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -294,8 +294,8 @@ const StatsCrovneScreen = () => {
                       source={require('../../assets/images/deleteBtn.png')}
                     />
                   </TouchableOpacity>
-                </View>
-              </View>
+                </CrovneMainBox>
+              </CrovneMainBox>
             )}
           </>
         )}
@@ -303,7 +303,7 @@ const StatsCrovneScreen = () => {
         {crovneFishSpeedReactionMode === 'party' && (
           <>
             {crovneFishSpeedReactionPartyList.map((p, i) => (
-              <View
+              <CrovneMainBox
                 key={i}
                 style={{
                   width: i === 0 ? '90%' : '80%',
@@ -318,7 +318,9 @@ const StatsCrovneScreen = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <CrovneMainBox
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                >
                   {i < 3 ? (
                     <Image
                       source={crovneFishSpeedReactionCrowns[i]}
@@ -330,7 +332,7 @@ const StatsCrovneScreen = () => {
                       }}
                     />
                   ) : (
-                    <View
+                    <CrovneMainBox
                       style={{
                         width: 54,
                         height: 54,
@@ -351,7 +353,7 @@ const StatsCrovneScreen = () => {
                       >
                         {i + 1}
                       </Text>
-                    </View>
+                    </CrovneMainBox>
                   )}
                   <Text
                     style={{
@@ -362,9 +364,9 @@ const StatsCrovneScreen = () => {
                   >
                     {p.name}
                   </Text>
-                </View>
+                </CrovneMainBox>
 
-                <View
+                <CrovneMainBox
                   style={{
                     borderWidth: 1,
                     borderColor: '#FFD34C',
@@ -388,8 +390,8 @@ const StatsCrovneScreen = () => {
                       ? `${p.bestTime.toFixed(3)} sec.`
                       : '---'}
                   </Text>
-                </View>
-              </View>
+                </CrovneMainBox>
+              </CrovneMainBox>
             ))}
 
             {crovneFishSpeedReactionHasPartyData && (
@@ -433,8 +435,8 @@ const StatsCrovneScreen = () => {
             )}
           </>
         )}
-      </ScrollView>
-    </View>
+      </CrovneScrollWrap>
+    </CrovneMainBox>
   );
 };
 

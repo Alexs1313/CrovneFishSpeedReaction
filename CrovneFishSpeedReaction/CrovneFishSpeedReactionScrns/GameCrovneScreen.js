@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  TouchableOpacity,
+  TouchableOpacity as CrovneButton,
   Image,
   Share,
   ImageBackground,
@@ -152,11 +152,11 @@ const GameCrovneScreen = () => {
               justifyContent: 'space-between',
             }}
           >
-            <TouchableOpacity
+            <CrovneButton
               onPress={() => crovneFishSpeedReactionNavigation.goBack()}
             >
               <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
+            </CrovneButton>
 
             <Text
               style={{
@@ -200,7 +200,7 @@ const GameCrovneScreen = () => {
                 }}
               >
                 {crovneFishSpeedReactionFishVisible && (
-                  <TouchableOpacity
+                  <CrovneButton
                     activeOpacity={0.9}
                     onPress={crovneFishSpeedReactionOnFishPress}
                   >
@@ -212,13 +212,13 @@ const GameCrovneScreen = () => {
                         resizeMode: 'contain',
                       }}
                     />
-                  </TouchableOpacity>
+                  </CrovneButton>
                 )}
               </View>
             </ImageBackground>
 
             {!crovneFishSpeedReactionGameStarted && (
-              <TouchableOpacity
+              <CrovneButton
                 activeOpacity={0.85}
                 onPress={crovneFishSpeedReactionStartGame}
                 style={{ alignSelf: 'center' }}
@@ -245,7 +245,7 @@ const GameCrovneScreen = () => {
                     Start
                   </Text>
                 </LinearGradient>
-              </TouchableOpacity>
+              </CrovneButton>
             )}
 
             {crovneFishSpeedReactionWaitingFish && (
@@ -353,7 +353,7 @@ const GameCrovneScreen = () => {
                   {crovneFishSpeedReactionReaction} sec.
                 </Text>
 
-                <TouchableOpacity
+                <CrovneButton
                   activeOpacity={0.7}
                   onPress={crovneFishSpeedReactionOnShare}
                 >
@@ -378,7 +378,7 @@ const GameCrovneScreen = () => {
                       Share
                     </Text>
                   </ImageBackground>
-                </TouchableOpacity>
+                </CrovneButton>
               </View>
             </LinearGradient>
           </>

@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
+  TouchableOpacity as CrovneButton,
   Image,
-  ScrollView,
-  Modal,
+  ScrollView as CrovneScrollWrap,
+  Modal as CrovneCustomModal,
   ImageBackground,
   Share,
   Platform,
@@ -19,6 +19,24 @@ import { BlurView } from '@react-native-community/blur';
 const crovneFishSpeedReactionStorageKeys = {
   unlocked: 'crovne_unlocked_wallpapers',
   nextPlayAt: 'crovne_wallpapers_next_play_at',
+};
+
+const crovneFishSpeedReactionPad = n => String(n).padStart(2, '0');
+
+const crovneFishSpeedReactionFormatHMS = sec =>
+  `${crovneFishSpeedReactionPad(
+    Math.floor(sec / 3600),
+  )}:${crovneFishSpeedReactionPad(
+    Math.floor((sec % 3600) / 60),
+  )}:${crovneFishSpeedReactionPad(sec % 60)}`;
+
+const crovneFishSpeedReactionShuffle = arr => {
+  const crvnA = [...arr];
+  for (let i = crvnA.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [crvnA[i], crvnA[j]] = [crvnA[j], crvnA[i]];
+  }
+  return crvnA;
 };
 
 const crovneFishSpeedReactionFishes = [
@@ -41,24 +59,6 @@ const crovneFishSpeedReactionFishes = [
     wallpaper: require('../../assets/images/wallp3.png'),
   },
 ];
-
-const crovneFishSpeedReactionPad = n => String(n).padStart(2, '0');
-
-const crovneFishSpeedReactionFormatHMS = sec =>
-  `${crovneFishSpeedReactionPad(
-    Math.floor(sec / 3600),
-  )}:${crovneFishSpeedReactionPad(
-    Math.floor((sec % 3600) / 60),
-  )}:${crovneFishSpeedReactionPad(sec % 60)}`;
-
-const crovneFishSpeedReactionShuffle = arr => {
-  const crvnA = [...arr];
-  for (let i = crvnA.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [crvnA[i], crvnA[j]] = [crvnA[j], crvnA[i]];
-  }
-  return crvnA;
-};
 
 const crovneFishSpeedReactionBuildDeck = () => {
   const cards = [];
@@ -90,7 +90,6 @@ const DailyCrovneWallpaperScreen = () => {
     crovneFishSpeedReactionNextPlayAt,
     setCrovneFishSpeedReactionNextPlayAt,
   ] = useState(null);
-
   const [crovneFishSpeedReactionDeck, setCrovneFishSpeedReactionDeck] =
     useState(crovneFishSpeedReactionBuildDeck);
   const [crovneFishSpeedReactionRevealed, setCrovneFishSpeedReactionRevealed] =
@@ -229,7 +228,7 @@ const DailyCrovneWallpaperScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#000', paddingTop: 60 }}>
-      <ScrollView
+      <CrovneScrollWrap
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
@@ -253,11 +252,11 @@ const DailyCrovneWallpaperScreen = () => {
               justifyContent: 'space-between',
             }}
           >
-            <TouchableOpacity
+            <CrovneButton
               onPress={() => crovneFishSpeedReactionNavigation.goBack()}
             >
               <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
+            </CrovneButton>
 
             <Text
               style={{
@@ -356,7 +355,7 @@ const DailyCrovneWallpaperScreen = () => {
                   );
 
                   return (
-                    <TouchableOpacity
+                    <CrovneButton
                       key={card.key}
                       style={{
                         width: '23%',
@@ -398,7 +397,7 @@ const DailyCrovneWallpaperScreen = () => {
                           ></Text>
                         )}
                       </View>
-                    </TouchableOpacity>
+                    </CrovneButton>
                   );
                 })}
               </View>
@@ -406,7 +405,7 @@ const DailyCrovneWallpaperScreen = () => {
           )}
         </View>
 
-        <Modal
+        <CrovneCustomModal
           visible={crovneFishSpeedReactionWinModal}
           transparent
           animationType="fade"
@@ -486,16 +485,16 @@ const DailyCrovneWallpaperScreen = () => {
                   width: '100%',
                 }}
               >
-                <TouchableOpacity
+                <CrovneButton
                   onPress={() => {
                     setCrovneFishSpeedReactionWinModal(false);
                     crovneFishSpeedReactionResetAfterWin();
                   }}
                 >
                   <Image source={require('../../assets/images/backCard.png')} />
-                </TouchableOpacity>
+                </CrovneButton>
 
-                <TouchableOpacity
+                <CrovneButton
                   activeOpacity={0.7}
                   onPress={() =>
                     Share.share({
@@ -524,12 +523,12 @@ const DailyCrovneWallpaperScreen = () => {
                       Share
                     </Text>
                   </ImageBackground>
-                </TouchableOpacity>
+                </CrovneButton>
               </View>
             </View>
           </View>
-        </Modal>
-      </ScrollView>
+        </CrovneCustomModal>
+      </CrovneScrollWrap>
     </View>
   );
 };

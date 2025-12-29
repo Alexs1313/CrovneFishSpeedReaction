@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Image,
   Share,
-  ScrollView,
+  ScrollView as CrovneScrollWrap,
   TextInput,
   StyleSheet,
 } from 'react-native';
@@ -204,266 +204,11 @@ const PartyGameCrovneScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
-      {!crovneFishSpeedReactionStarted && (
-        <LinearGradient colors={GRADIENT_COLORS} style={styles.header}>
-          <View style={styles.headerInner}>
-            <TouchableOpacity
-              onPress={() => crovneFishSpeedReactionNavigation.goBack()}
-            >
-              <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Game</Text>
-            <Image source={require('../../assets/images/headLogo.png')} />
-          </View>
-        </LinearGradient>
-      )}
-
-      {!crovneFishSpeedReactionStarted && (
-        <View style={styles.chooseWrapper}>
-          <Text style={styles.chooseTitle}>Choose players</Text>
-
-          <View style={styles.counterRow}>
-            <TouchableOpacity
-              onPress={() => crovneFishSpeedReactionChangePlayers('dec')}
-            >
-              <Image source={require('../../assets/images/prevarr.png')} />
-            </TouchableOpacity>
-
-            <View style={styles.countBox}>
-              <Text style={styles.countText}>
-                {crovneFishSpeedReactionPlayersCount}
-              </Text>
-            </View>
-
-            <TouchableOpacity
-              onPress={() => crovneFishSpeedReactionChangePlayers('inc')}
-            >
-              <Image source={require('../../assets/images/nextarr.png')} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.inputsCard}>
-            {crovneFishSpeedReactionPlayers.map((name, index) => (
-              <TextInput
-                key={index}
-                value={name}
-                onChangeText={text =>
-                  crovneFishSpeedReactionOnChangeName(index, text)
-                }
-                placeholder={`Player ${index + 1}`}
-                placeholderTextColor="#777"
-                autoCapitalize="words"
-                autoCorrect={false}
-                returnKeyType="done"
-                style={styles.input}
-              />
-            ))}
-          </View>
-
-          <TouchableOpacity onPress={crovneFishSpeedReactionStartGame}>
-            <LinearGradient
-              colors={GRADIENT_COLORS}
-              style={styles.startBtn}
-              start={{ x: 0.6, y: 1.8 }}
-              end={{ x: 0.7, y: 0 }}
-            >
-              <Text style={styles.startText}>Start</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {crovneFishSpeedReactionStarted &&
-        !crovneFishSpeedReactionFinished &&
-        crovneFishSpeedReactionPlayersCount === 2 && (
-          <View style={styles.field}>
-            <TouchableOpacity
-              style={[
-                styles.zoneBase,
-                styles.topZone,
-                crovneFishSpeedReactionResults[0] !== null &&
-                  styles.zonePressed,
-              ]}
-              onPress={() => crovneFishSpeedReactionOnPressPlayer(0)}
-            >
-              <Text style={[styles.name, styles.rotated]}>
-                {crovneFishSpeedReactionDisplayName(
-                  crovneFishSpeedReactionPlayers[0],
-                  0,
-                )}
-              </Text>
-              <Text style={[styles.time, styles.rotated]}>
-                {crovneFishSpeedReactionResults[0] ?? '0.000'} sec.
-              </Text>
-            </TouchableOpacity>
-
-            <View style={styles.centerBox}>
-              {!crovneFishSpeedReactionFishVisible && (
-                <Text style={styles.centerText}>Watch carefully</Text>
-              )}
-              {crovneFishSpeedReactionFishVisible && (
-                <Image
-                  source={crovneFishSpeedReactionFish}
-                  style={styles.fish}
-                />
-              )}
-            </View>
-
-            <TouchableOpacity
-              style={[
-                styles.zoneBase,
-                styles.bottomZone,
-                crovneFishSpeedReactionResults[1] !== null &&
-                  styles.zonePressed,
-              ]}
-              onPress={() => crovneFishSpeedReactionOnPressPlayer(1)}
-            >
-              <Text style={styles.name}>
-                {crovneFishSpeedReactionDisplayName(
-                  crovneFishSpeedReactionPlayers[1],
-                  1,
-                )}
-              </Text>
-              <Text style={styles.time}>
-                {crovneFishSpeedReactionResults[1] ?? '0.000'} sec.
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-      {crovneFishSpeedReactionStarted &&
-        !crovneFishSpeedReactionFinished &&
-        crovneFishSpeedReactionPlayersCount === 3 && (
-          <View style={styles.field}>
-            <TouchableOpacity
-              style={[
-                styles.zoneBase,
-                styles.topZone,
-                crovneFishSpeedReactionResults[0] !== null &&
-                  styles.zonePressed,
-              ]}
-              onPress={() => crovneFishSpeedReactionOnPressPlayer(0)}
-            >
-              <Text style={[styles.name, styles.rotated]}>
-                {crovneFishSpeedReactionDisplayName(
-                  crovneFishSpeedReactionPlayers[0],
-                  0,
-                )}
-              </Text>
-              <Text style={[styles.time, styles.rotated]}>
-                {crovneFishSpeedReactionResults[0] ?? '0.000'} sec.
-              </Text>
-            </TouchableOpacity>
-
-            <View style={styles.centerBox}>
-              {!crovneFishSpeedReactionFishVisible && (
-                <Text style={styles.centerText}>Watch carefully</Text>
-              )}
-              {crovneFishSpeedReactionFishVisible && (
-                <Image
-                  source={crovneFishSpeedReactionFish}
-                  style={styles.fish}
-                />
-              )}
-            </View>
-
-            <View style={styles.bottomRow}>
-              {[1, 2].map(i => (
-                <TouchableOpacity
-                  key={i}
-                  style={[
-                    styles.zoneBase,
-                    styles.bottomHalf,
-                    crovneFishSpeedReactionResults[i] !== null &&
-                      styles.zonePressed,
-                  ]}
-                  onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
-                >
-                  <Text style={styles.name}>
-                    {crovneFishSpeedReactionDisplayName(
-                      crovneFishSpeedReactionPlayers[i],
-                      i,
-                    )}
-                  </Text>
-                  <Text style={styles.time}>
-                    {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        )}
-
-      {crovneFishSpeedReactionStarted &&
-        !crovneFishSpeedReactionFinished &&
-        crovneFishSpeedReactionPlayersCount === 4 && (
-          <View style={styles.field}>
-            <View style={styles.row}>
-              {[0, 1].map(i => (
-                <TouchableOpacity
-                  key={i}
-                  style={[
-                    styles.zoneBase,
-                    styles.bottomHalf,
-                    crovneFishSpeedReactionResults[i] !== null &&
-                      styles.zonePressed,
-                  ]}
-                  onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
-                >
-                  <Text style={[styles.name, styles.rotated]}>
-                    {crovneFishSpeedReactionDisplayName(
-                      crovneFishSpeedReactionPlayers[i],
-                      i,
-                    )}
-                  </Text>
-                  <Text style={[styles.time, styles.rotated]}>
-                    {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-
-            <View style={styles.centerBox}>
-              {!crovneFishSpeedReactionFishVisible && (
-                <Text style={styles.centerText}>Watch carefully</Text>
-              )}
-              {crovneFishSpeedReactionFishVisible && (
-                <Image
-                  source={crovneFishSpeedReactionFish}
-                  style={styles.fish}
-                />
-              )}
-            </View>
-
-            <View style={styles.row}>
-              {[2, 3].map(i => (
-                <TouchableOpacity
-                  key={i}
-                  style={[
-                    styles.zoneBase,
-                    styles.quarter,
-                    crovneFishSpeedReactionResults[i] !== null &&
-                      styles.zonePressed,
-                  ]}
-                  onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
-                >
-                  <Text style={styles.name}>
-                    {crovneFishSpeedReactionDisplayName(
-                      crovneFishSpeedReactionPlayers[i],
-                      i,
-                    )}
-                  </Text>
-                  <Text style={styles.time}>
-                    {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        )}
-
-      {crovneFishSpeedReactionFinished && (
-        <ScrollView contentContainerStyle={styles.resultWrapper}>
+      <CrovneScrollWrap
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {!crovneFishSpeedReactionStarted && (
           <LinearGradient colors={GRADIENT_COLORS} style={styles.header}>
             <View style={styles.headerInner}>
               <TouchableOpacity
@@ -475,49 +220,312 @@ const PartyGameCrovneScreen = () => {
               <Image source={require('../../assets/images/headLogo.png')} />
             </View>
           </LinearGradient>
+        )}
 
-          <Text style={styles.resultTitle}>Result</Text>
+        {!crovneFishSpeedReactionStarted && (
+          <View style={styles.chooseWrapper}>
+            <Text style={styles.chooseTitle}>Choose players</Text>
 
-          {crovneFishSpeedReactionSortedResults.map((p, i) => (
-            <View
-              key={i}
-              style={[styles.partyRow, { width: i === 0 ? '90%' : '80%' }]}
-            >
-              <View style={styles.left}>
-                {i < 3 ? (
-                  <Image
-                    source={crovneFishSpeedReactionCrowns[i]}
-                    style={styles.crown}
-                  />
-                ) : (
-                  <View style={styles.place}>
-                    <Text style={styles.placeText}>{i + 1}</Text>
-                  </View>
-                )}
-                <Text style={styles.player}>{p.name}</Text>
+            <View style={styles.counterRow}>
+              <TouchableOpacity
+                onPress={() => crovneFishSpeedReactionChangePlayers('dec')}
+              >
+                <Image source={require('../../assets/images/prevarr.png')} />
+              </TouchableOpacity>
+
+              <View style={styles.countBox}>
+                <Text style={styles.countText}>
+                  {crovneFishSpeedReactionPlayersCount}
+                </Text>
               </View>
 
-              <View style={styles.timeBox}>
-                <Text style={styles.partyTime}>{p.time}</Text>
+              <TouchableOpacity
+                onPress={() => crovneFishSpeedReactionChangePlayers('inc')}
+              >
+                <Image source={require('../../assets/images/nextarr.png')} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputsCard}>
+              {crovneFishSpeedReactionPlayers.map((name, index) => (
+                <TextInput
+                  key={index}
+                  value={name}
+                  onChangeText={text =>
+                    crovneFishSpeedReactionOnChangeName(index, text)
+                  }
+                  placeholder={`Player ${index + 1}`}
+                  placeholderTextColor="#777"
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  returnKeyType="done"
+                  style={styles.input}
+                />
+              ))}
+            </View>
+
+            <TouchableOpacity onPress={crovneFishSpeedReactionStartGame}>
+              <LinearGradient
+                colors={GRADIENT_COLORS}
+                style={styles.startBtn}
+                start={{ x: 0.6, y: 1.8 }}
+                end={{ x: 0.7, y: 0 }}
+              >
+                <Text style={styles.startText}>Start</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {crovneFishSpeedReactionStarted &&
+          !crovneFishSpeedReactionFinished &&
+          crovneFishSpeedReactionPlayersCount === 2 && (
+            <View style={styles.field}>
+              <TouchableOpacity
+                style={[
+                  styles.zoneBase,
+                  styles.topZone,
+                  crovneFishSpeedReactionResults[0] !== null &&
+                    styles.zonePressed,
+                ]}
+                onPress={() => crovneFishSpeedReactionOnPressPlayer(0)}
+              >
+                <Text style={[styles.name, styles.rotated]}>
+                  {crovneFishSpeedReactionDisplayName(
+                    crovneFishSpeedReactionPlayers[0],
+                    0,
+                  )}
+                </Text>
+                <Text style={[styles.time, styles.rotated]}>
+                  {crovneFishSpeedReactionResults[0] ?? '0.000'} sec.
+                </Text>
+              </TouchableOpacity>
+
+              <View style={styles.centerBox}>
+                {!crovneFishSpeedReactionFishVisible && (
+                  <Text style={styles.centerText}>Watch carefully</Text>
+                )}
+                {crovneFishSpeedReactionFishVisible && (
+                  <Image
+                    source={crovneFishSpeedReactionFish}
+                    style={styles.fish}
+                  />
+                )}
+              </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.zoneBase,
+                  styles.bottomZone,
+                  crovneFishSpeedReactionResults[1] !== null &&
+                    styles.zonePressed,
+                ]}
+                onPress={() => crovneFishSpeedReactionOnPressPlayer(1)}
+              >
+                <Text style={styles.name}>
+                  {crovneFishSpeedReactionDisplayName(
+                    crovneFishSpeedReactionPlayers[1],
+                    1,
+                  )}
+                </Text>
+                <Text style={styles.time}>
+                  {crovneFishSpeedReactionResults[1] ?? '0.000'} sec.
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+        {crovneFishSpeedReactionStarted &&
+          !crovneFishSpeedReactionFinished &&
+          crovneFishSpeedReactionPlayersCount === 3 && (
+            <View style={styles.field}>
+              <TouchableOpacity
+                style={[
+                  styles.zoneBase,
+                  styles.topZone,
+                  crovneFishSpeedReactionResults[0] !== null &&
+                    styles.zonePressed,
+                ]}
+                onPress={() => crovneFishSpeedReactionOnPressPlayer(0)}
+              >
+                <Text style={[styles.name, styles.rotated]}>
+                  {crovneFishSpeedReactionDisplayName(
+                    crovneFishSpeedReactionPlayers[0],
+                    0,
+                  )}
+                </Text>
+                <Text style={[styles.time, styles.rotated]}>
+                  {crovneFishSpeedReactionResults[0] ?? '0.000'} sec.
+                </Text>
+              </TouchableOpacity>
+
+              <View style={styles.centerBox}>
+                {!crovneFishSpeedReactionFishVisible && (
+                  <Text style={styles.centerText}>Watch carefully</Text>
+                )}
+                {crovneFishSpeedReactionFishVisible && (
+                  <Image
+                    source={crovneFishSpeedReactionFish}
+                    style={styles.fish}
+                  />
+                )}
+              </View>
+
+              <View style={styles.bottomRow}>
+                {[1, 2].map(i => (
+                  <TouchableOpacity
+                    key={i}
+                    style={[
+                      styles.zoneBase,
+                      styles.bottomHalf,
+                      crovneFishSpeedReactionResults[i] !== null &&
+                        styles.zonePressed,
+                    ]}
+                    onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
+                  >
+                    <Text style={styles.name}>
+                      {crovneFishSpeedReactionDisplayName(
+                        crovneFishSpeedReactionPlayers[i],
+                        i,
+                      )}
+                    </Text>
+                    <Text style={styles.time}>
+                      {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
-          ))}
+          )}
 
-          <TouchableOpacity
-            style={{ marginTop: 50 }}
-            onPress={crovneFishSpeedReactionOnShareResults}
-          >
-            <LinearGradient
-              colors={GRADIENT_COLORS}
-              style={styles.shareBtn}
-              start={{ x: 0.6, y: 1.8 }}
-              end={{ x: 0.7, y: 0 }}
-            >
-              <Text style={styles.shareBtnText}>Share</Text>
+        {crovneFishSpeedReactionStarted &&
+          !crovneFishSpeedReactionFinished &&
+          crovneFishSpeedReactionPlayersCount === 4 && (
+            <View style={styles.field}>
+              <View style={styles.row}>
+                {[0, 1].map(i => (
+                  <TouchableOpacity
+                    key={i}
+                    style={[
+                      styles.zoneBase,
+                      styles.bottomHalf,
+                      crovneFishSpeedReactionResults[i] !== null &&
+                        styles.zonePressed,
+                    ]}
+                    onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
+                  >
+                    <Text style={[styles.name, styles.rotated]}>
+                      {crovneFishSpeedReactionDisplayName(
+                        crovneFishSpeedReactionPlayers[i],
+                        i,
+                      )}
+                    </Text>
+                    <Text style={[styles.time, styles.rotated]}>
+                      {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              <View style={styles.centerBox}>
+                {!crovneFishSpeedReactionFishVisible && (
+                  <Text style={styles.centerText}>Watch carefully</Text>
+                )}
+                {crovneFishSpeedReactionFishVisible && (
+                  <Image
+                    source={crovneFishSpeedReactionFish}
+                    style={styles.fish}
+                  />
+                )}
+              </View>
+
+              <View style={styles.row}>
+                {[2, 3].map(i => (
+                  <TouchableOpacity
+                    key={i}
+                    style={[
+                      styles.zoneBase,
+                      styles.quarter,
+                      crovneFishSpeedReactionResults[i] !== null &&
+                        styles.zonePressed,
+                    ]}
+                    onPress={() => crovneFishSpeedReactionOnPressPlayer(i)}
+                  >
+                    <Text style={styles.name}>
+                      {crovneFishSpeedReactionDisplayName(
+                        crovneFishSpeedReactionPlayers[i],
+                        i,
+                      )}
+                    </Text>
+                    <Text style={styles.time}>
+                      {crovneFishSpeedReactionResults[i] ?? '0.000'} sec.
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
+
+        {crovneFishSpeedReactionFinished && (
+          <CrovneScrollWrap contentContainerStyle={styles.resultWrapper}>
+            <LinearGradient colors={GRADIENT_COLORS} style={styles.header}>
+              <View style={styles.headerInner}>
+                <TouchableOpacity
+                  onPress={() => crovneFishSpeedReactionNavigation.goBack()}
+                >
+                  <Image
+                    source={require('../../assets/images/backButton.png')}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Game</Text>
+                <Image source={require('../../assets/images/headLogo.png')} />
+              </View>
             </LinearGradient>
-          </TouchableOpacity>
-        </ScrollView>
-      )}
+
+            <Text style={styles.resultTitle}>Result</Text>
+
+            {crovneFishSpeedReactionSortedResults.map((p, i) => (
+              <View
+                key={i}
+                style={[styles.partyRow, { width: i === 0 ? '90%' : '80%' }]}
+              >
+                <View style={styles.left}>
+                  {i < 3 ? (
+                    <Image
+                      source={crovneFishSpeedReactionCrowns[i]}
+                      style={styles.crown}
+                    />
+                  ) : (
+                    <View style={styles.place}>
+                      <Text style={styles.placeText}>{i + 1}</Text>
+                    </View>
+                  )}
+                  <Text style={styles.player}>{p.name}</Text>
+                </View>
+
+                <View style={styles.timeBox}>
+                  <Text style={styles.partyTime}>{p.time}</Text>
+                </View>
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={{ marginTop: 50 }}
+              activeOpacity={0.8}
+              onPress={crovneFishSpeedReactionOnShareResults}
+            >
+              <LinearGradient
+                colors={GRADIENT_COLORS}
+                style={styles.shareBtn}
+                start={{ x: 0.6, y: 1.8 }}
+                end={{ x: 0.7, y: 0 }}
+              >
+                <Text style={styles.shareBtnText}>Share</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </CrovneScrollWrap>
+        )}
+      </CrovneScrollWrap>
     </View>
   );
 };

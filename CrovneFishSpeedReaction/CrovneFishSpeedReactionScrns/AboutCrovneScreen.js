@@ -1,9 +1,9 @@
 import {
-  Image,
+  Image as CrovneImage,
   ImageBackground,
   Share,
   Text,
-  TouchableOpacity,
+  TouchableOpacity as CrovneButton,
   View,
 } from 'react-native';
 import ScrollWrapper from '../CrovneFishSpeedReactionCmpnts/ScrollWrapper';
@@ -53,12 +53,14 @@ wallpapers as a reward for precision and focus.`,
               justifyContent: 'space-between',
             }}
           >
-            <TouchableOpacity
+            <CrovneButton
               activeOpacity={0.6}
               onPress={() => navigation.goBack()}
             >
-              <Image source={require('../../assets/images/backButton.png')} />
-            </TouchableOpacity>
+              <CrovneImage
+                source={require('../../assets/images/backButton.png')}
+              />
+            </CrovneButton>
 
             <Text
               style={{
@@ -70,11 +72,11 @@ wallpapers as a reward for precision and focus.`,
               About
             </Text>
 
-            <Image source={require('../../assets/images/headLogo.png')} />
+            <CrovneImage source={require('../../assets/images/headLogo.png')} />
           </View>
         </LinearGradient>
 
-        <Image
+        <CrovneImage
           source={require('../../assets/images/aboutLogo.png')}
           style={{ marginTop: 27 }}
         />
@@ -112,7 +114,7 @@ wallpapers as a reward for precision and focus.`,
               wallpapers as a reward for precision and focus.
             </Text>
 
-            <TouchableOpacity activeOpacity={0.7} onPress={shrCrvneAbout}>
+            <CrovneButton activeOpacity={0.7} onPress={shrCrvneAbout}>
               <ImageBackground
                 source={require('../../assets/images/onboardBtn.png')}
                 style={{
@@ -134,7 +136,7 @@ wallpapers as a reward for precision and focus.`,
                   Share
                 </Text>
               </ImageBackground>
-            </TouchableOpacity>
+            </CrovneButton>
           </View>
         </LinearGradient>
       </View>
