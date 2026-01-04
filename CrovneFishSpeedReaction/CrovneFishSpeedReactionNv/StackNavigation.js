@@ -16,10 +16,7 @@ const Stack = createStackNavigator();
 const StackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="OnboardCrovneScreen"
-        component={OnboardCrovneScreen}
-      />
+      <Stack.Screen name="OnboardCrovneScree" component={OnboardCrovneScree} />
       <Stack.Screen name="HomeCrovneScreen" component={HomeCrovneScreen} />
       <Stack.Screen name="AboutCrovneScreen" component={AboutCrovneScreen} />
       <Stack.Screen name="GameCrovneScreen" component={GameCrovneScreen} />
