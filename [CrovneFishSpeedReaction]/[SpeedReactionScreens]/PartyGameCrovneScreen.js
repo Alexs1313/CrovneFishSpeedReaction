@@ -15,6 +15,11 @@ import { GRADIENT_COLORS } from '../consts';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Orientation from 'react-native-orientation-locker';
 
+const mainYellow = '#FFD34C';
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
+
 const crovneFishSpeedReactionCrowns = [
   require('../../assets/images/crowngold.png'),
   require('../../assets/images/crownsilver.png'),
@@ -59,18 +64,28 @@ const PartyGameCrovneScreen = () => {
     name?.trim() ? name.trim() : `Player ${index + 1}`;
 
   useEffect(() => {
-    setCrovneFishSpeedReactionPlayers(prev => {
-      const next = [...prev];
-      while (next.length < crovneFishSpeedReactionPlayersCount) next.push('');
-      next.length = crovneFishSpeedReactionPlayersCount;
-      return next;
+    setCrovneFishSpeedReactionPlayers(prevPlayers => {
+      const updatedPlayers = [...prevPlayers];
+
+      while (updatedPlayers.length < crovneFishSpeedReactionPlayersCount) {
+        updatedPlayers.push('');
+      }
+
+      updatedPlayers.length = crovneFishSpeedReactionPlayersCount;
+
+      return updatedPlayers;
     });
 
-    setCrovneFishSpeedReactionResults(prev => {
-      const next = [...prev];
-      while (next.length < crovneFishSpeedReactionPlayersCount) next.push(null);
-      next.length = crovneFishSpeedReactionPlayersCount;
-      return next;
+    setCrovneFishSpeedReactionResults(prevResults => {
+      const updatedResults = [...prevResults];
+
+      while (updatedResults.length < crovneFishSpeedReactionPlayersCount) {
+        updatedResults.push(null);
+      }
+
+      updatedResults.length = crovneFishSpeedReactionPlayersCount;
+
+      return updatedResults;
     });
   }, [crovneFishSpeedReactionPlayersCount]);
 
@@ -91,10 +106,10 @@ const PartyGameCrovneScreen = () => {
 
   const crovneFishSpeedReactionOnChangeName = (index, text) => {
     if (crovneFishSpeedReactionStarted) return;
-    setCrovneFishSpeedReactionPlayers(prev => {
-      const next = [...prev];
-      next[index] = text;
-      return next;
+    setCrovneFishSpeedReactionPlayers(prevPlayers => {
+      const updatedPlayers = [...prevPlayers];
+      updatedPlayers[index] = text;
+      return updatedPlayers;
     });
   };
 
@@ -107,12 +122,14 @@ const PartyGameCrovneScreen = () => {
     setCrovneFishSpeedReactionFishVisible(false);
 
     const delay = Math.random() * 3000 + 1000;
+
     setTimeout(() => {
-      setCrovneFishSpeedReactionFish(
+      const randomFish =
         crovneFishSpeedReactionFishes[
           Math.floor(Math.random() * crovneFishSpeedReactionFishes.length)
-        ],
-      );
+        ];
+
+      setCrovneFishSpeedReactionFish(randomFish);
       crovneFishSpeedReactionStartTimeRef.current = Date.now();
       setCrovneFishSpeedReactionFishVisible(true);
     }, delay);
@@ -136,21 +153,24 @@ const PartyGameCrovneScreen = () => {
       );
       const savedDict = savedRaw ? JSON.parse(savedRaw) : {};
 
-      for (const p of finalResults) {
-        const timeNum = parseFloat(p.time);
-        const prevBest = savedDict[p.name]?.bestTime;
-        savedDict[p.name] = {
+      finalResults.forEach(player => {
+        const timeNum = parseFloat(player.time);
+        const prevBest = savedDict[player.name]?.bestTime;
+
+        savedDict[player.name] = {
           lastTime: timeNum,
           bestTime: prevBest == null ? timeNum : Math.min(prevBest, timeNum),
           updatedAt: now,
         };
-      }
+      });
 
       await AsyncStorage.setItem(
         crovneFishSpeedReactionStorageKeys.playerTimes,
         JSON.stringify(savedDict),
       );
-    } catch {}
+    } catch (error) {
+      console.error('Error saving results:', error);
+    }
   };
 
   const crovneFishSpeedReactionOnPressPlayer = async index => {
@@ -552,8 +572,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
   },
   chooseWrapper: {
     flex: 1,
@@ -563,8 +583,8 @@ const styles = StyleSheet.create({
   },
   chooseTitle: {
     fontSize: 22,
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
     marginBottom: 20,
   },
   counterRow: {
@@ -578,19 +598,19 @@ const styles = StyleSheet.create({
     height: 58,
     borderRadius: 14,
     borderWidth: 0.5,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     justifyContent: 'center',
     alignItems: 'center',
   },
   countText: {
     fontSize: 32,
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
   },
   inputsCard: {
     width: '90%',
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     borderRadius: 22,
     padding: 24,
     marginBottom: 35,
@@ -599,11 +619,11 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 18,
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     borderRadius: 22,
     paddingHorizontal: 16,
-    color: '#fff',
-    fontFamily: 'Montserrat-SemiBold',
+    color: mainWhite,
+    fontFamily: fontSB,
     fontSize: 15,
     marginBottom: 15,
   },
@@ -616,13 +636,13 @@ const styles = StyleSheet.create({
   },
   startText: {
     fontSize: 24,
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: fontSB,
     color: '#000',
   },
   field: { flex: 1 },
   zoneBase: {
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
@@ -636,15 +656,15 @@ const styles = StyleSheet.create({
   zonePressed: { backgroundColor: '#09A102' },
   name: {
     fontSize: 26,
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
     textAlign: 'center',
     paddingHorizontal: 8,
   },
   time: {
     fontSize: 16,
-    fontFamily: 'Montserrat-Regular',
-    color: '#fff',
+    fontFamily: fontR,
+    color: mainWhite,
     marginTop: 6,
   },
   rotated: { transform: [{ rotate: '180deg' }] },
@@ -656,16 +676,16 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 22,
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
     zIndex: 10,
   },
   centerText: {
-    color: '#fff',
+    color: mainWhite,
     fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: fontSB,
     textAlign: 'center',
   },
   fish: { width: 80, height: 80, resizeMode: 'contain' },
@@ -676,15 +696,15 @@ const styles = StyleSheet.create({
   },
   resultTitle: {
     fontSize: 24,
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
     marginBottom: 30,
   },
   partyRow: {
     alignSelf: 'center',
     borderRadius: 22,
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     padding: 22,
     marginBottom: 14,
     flexDirection: 'row',
@@ -703,24 +723,24 @@ const styles = StyleSheet.create({
     height: 54,
     borderRadius: 12,
     borderWidth: 0.5,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
   },
   placeText: {
-    fontFamily: 'Montserrat-SemiBold',
-    color: '#fff',
+    fontFamily: fontSB,
+    color: mainWhite,
     fontSize: 24,
   },
   player: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: fontSB,
     fontSize: 20,
-    color: '#fff',
+    color: mainWhite,
   },
   timeBox: {
     borderWidth: 1,
-    borderColor: '#FFD34C',
+    borderColor: mainYellow,
     borderRadius: 14,
     paddingVertical: 9,
     paddingHorizontal: 12,
@@ -730,9 +750,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   partyTime: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: fontSB,
     fontSize: 15,
-    color: '#fff',
+    color: mainWhite,
   },
   shareBtn: {
     width: 260,
@@ -742,7 +762,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   shareBtnText: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: fontSB,
     fontSize: 22,
     color: '#000',
   },

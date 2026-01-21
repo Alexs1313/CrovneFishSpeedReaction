@@ -13,7 +13,11 @@ import { useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { GRADIENT_COLORS } from '../consts';
-import { useStore } from '../CrovneFishSpeedReactionStore/context';
+import { useStore } from '../[FishSpeedReactionStore]/context';
+
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
 
 const CollectionCrovneScreen = () => {
   const crovneFishSpeedReactionNavigation = useNavigation();
@@ -102,7 +106,7 @@ const CollectionCrovneScreen = () => {
                 <Text
                   style={{
                     fontSize: 14,
-                    fontFamily: 'Montserrat-SemiBold',
+                    fontFamily: fontSB,
                     color: '#000',
                   }}
                 >
@@ -157,8 +161,8 @@ const CollectionCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               Collection
@@ -179,7 +183,7 @@ const CollectionCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 16,
-                fontFamily: 'Montserrat-Regular',
+                fontFamily: fontR,
                 color: '#777',
               }}
             >

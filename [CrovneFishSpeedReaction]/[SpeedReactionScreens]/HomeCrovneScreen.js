@@ -8,6 +8,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+const mainYellow = '#FFD34C';
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
+
 const HomeScreen = () => {
   const navigation = useNavigation();
 
@@ -36,8 +41,8 @@ const HomeScreen = () => {
       <Text
         style={{
           fontSize: 20,
-          fontFamily: 'Montserrat-SemiBold',
-          color: '#fff',
+          fontFamily: fontSB,
+          color: mainWhite,
           marginBottom: 6,
         }}
       >
@@ -47,7 +52,7 @@ const HomeScreen = () => {
       <Text
         style={{
           fontSize: 10,
-          fontFamily: 'Montserrat-Regular',
+          fontFamily: fontR,
           color: '#9D8202',
           textAlign: 'center',
         }}
@@ -61,7 +66,7 @@ const HomeScreen = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#000000ff',
         justifyContent: 'space-between',
       }}
     >
@@ -133,7 +138,7 @@ const HomeScreen = () => {
             justifyContent: 'space-around',
             paddingVertical: 16,
             borderWidth: 1,
-            borderColor: '#FFD34C',
+            borderColor: mainYellow,
             position: 'absolute',
             bottom: 20,
             width: 200,

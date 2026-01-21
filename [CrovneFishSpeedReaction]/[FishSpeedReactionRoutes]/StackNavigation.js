@@ -1,22 +1,25 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeCrovneScreen from '../CrovneFishSpeedReactionScrns/HomeCrovneScreen';
-
-import AboutCrovneScreen from '../CrovneFishSpeedReactionScrns/AboutCrovneScreen';
-import GameCrovneScreen from '../CrovneFishSpeedReactionScrns/GameCrovneScreen';
-import ModeCrovneScreen from '../CrovneFishSpeedReactionScrns/ModeCrovneScreen';
-import PartyGameCrovneScreen from '../CrovneFishSpeedReactionScrns/PartyGameCrovneScreen';
-import StatsCrovneScreen from '../CrovneFishSpeedReactionScrns/StatsCrovneScreen';
-import DailyCrovneWallpaperScreen from '../CrovneFishSpeedReactionScrns/DailyCrovneWallpaperScreen';
-import CollectionCrovneScreen from '../CrovneFishSpeedReactionScrns/CollectionCrovneScreen';
-import OnboardCrovneScreen from '../CrovneFishSpeedReactionScrns/OnboardCrovneScreen';
+// stack routes
+import HomeCrovneScreen from '../[SpeedReactionScreens]/HomeCrovneScreen';
+import AboutCrovneScreen from '../[SpeedReactionScreens]/AboutCrovneScreen';
+import GameCrovneScreen from '../[SpeedReactionScreens]/GameCrovneScreen';
+import ModeCrovneScreen from '../[SpeedReactionScreens]/ModeCrovneScreen';
+import PartyGameCrovneScreen from '../[SpeedReactionScreens]/PartyGameCrovneScreen';
+import StatsCrovneScreen from '../[SpeedReactionScreens]/StatsCrovneScreen';
+import DailyCrovneWallpaperScreen from '../[SpeedReactionScreens]/DailyCrovneWallpaperScreen';
+import CollectionCrovneScreen from '../[SpeedReactionScreens]/CollectionCrovneScreen';
+import OnboardCrovneScreen from '../[SpeedReactionScreens]/OnboardCrovneScreen';
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="OnboardCrovneScree" component={OnboardCrovneScree} />
+      <Stack.Screen
+        name="OnboardCrovneScreen"
+        component={OnboardCrovneScreen}
+      />
       <Stack.Screen name="HomeCrovneScreen" component={HomeCrovneScreen} />
       <Stack.Screen name="AboutCrovneScreen" component={AboutCrovneScreen} />
       <Stack.Screen name="GameCrovneScreen" component={GameCrovneScreen} />

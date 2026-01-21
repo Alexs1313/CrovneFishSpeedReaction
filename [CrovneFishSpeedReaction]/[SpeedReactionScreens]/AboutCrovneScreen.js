@@ -6,21 +6,22 @@ import {
   TouchableOpacity as CrovneButton,
   View,
 } from 'react-native';
-import ScrollWrapper from '../CrovneFishSpeedReactionCmpnts/ScrollWrapper';
+import ScrollWrapper from '../[CrovneFishComponents]/ScrollWrapper';
 import LinearGradient from 'react-native-linear-gradient';
-import { GRADIENT_COLORS } from '../consts';
 
+import { GRADIENT_COLORS } from '../consts';
 import { useNavigation } from '@react-navigation/native';
+
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
 
 const AboutCrovneScreen = () => {
   const navigation = useNavigation();
 
-  const shrCrvneAbout = () => {
+  const shareCurveReactionAbout = () => {
     Share.share({
-      message: `This app challenges your reaction speed through fast, minimal
-gameplay where timing is everything. Test yourself solo or compete
-with friends, track your best results, and unlock collectible
-wallpapers as a reward for precision and focus.`,
+      message: `This app challenges your reaction speed through fast, minimal gameplay where timing is everything. Test yourself solo or compete with friends, track your best results, and unlock collectible wallpapers as a reward for precision and focus.`,
     });
   };
 
@@ -65,8 +66,8 @@ wallpapers as a reward for precision and focus.`,
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               About
@@ -101,8 +102,8 @@ wallpapers as a reward for precision and focus.`,
             <Text
               style={{
                 fontSize: 15,
-                fontFamily: 'Montserrat-Regular',
-                color: '#fff',
+                fontFamily: fontR,
+                color: mainWhite,
                 paddingHorizontal: 24,
                 textAlign: 'center',
                 marginBottom: 10,
@@ -114,7 +115,7 @@ wallpapers as a reward for precision and focus.`,
               wallpapers as a reward for precision and focus.
             </Text>
 
-            <CrovneButton activeOpacity={0.7} onPress={shrCrvneAbout}>
+            <CrovneButton activeOpacity={0.7} onPress={shareCurveReactionAbout}>
               <ImageBackground
                 source={require('../../assets/images/onboardBtn.png')}
                 style={{
@@ -129,7 +130,7 @@ wallpapers as a reward for precision and focus.`,
                 <Text
                   style={{
                     fontSize: 18,
-                    fontFamily: 'Montserrat-SemiBold',
+                    fontFamily: fontSB,
                     color: '#000',
                   }}
                 >

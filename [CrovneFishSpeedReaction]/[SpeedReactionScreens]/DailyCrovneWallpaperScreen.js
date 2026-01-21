@@ -16,6 +16,11 @@ import { useNavigation } from '@react-navigation/native';
 import { GRADIENT_COLORS } from '../consts';
 import { BlurView } from '@react-native-community/blur';
 
+const mainYellow = '#FFD34C';
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
+
 const crovneFishSpeedReactionStorageKeys = {
   unlocked: 'crovne_unlocked_wallpapers',
   nextPlayAt: 'crovne_wallpapers_next_play_at',
@@ -83,7 +88,6 @@ const crovneFishSpeedReactionBuildDeck = () => {
 
 const DailyCrovneWallpaperScreen = () => {
   const crovneFishSpeedReactionNavigation = useNavigation();
-
   const [crovneFishSpeedReactionUnlocked, setCrovneFishSpeedReactionUnlocked] =
     useState([]);
   const [
@@ -100,7 +104,6 @@ const DailyCrovneWallpaperScreen = () => {
   ] = useState(2);
   const [crovneFishSpeedReactionBusy, setCrovneFishSpeedReactionBusy] =
     useState(false);
-
   const [
     crovneFishSpeedReactionWonFishId,
     setCrovneFishSpeedReactionWonFishId,
@@ -125,17 +128,19 @@ const DailyCrovneWallpaperScreen = () => {
 
   useEffect(() => {
     (async () => {
-      const unlockedCrvneRaw = await AsyncStorage.getItem(
+      const unlockedCurveRaw = await AsyncStorage.getItem(
         crovneFishSpeedReactionStorageKeys.unlocked,
       );
-      const timeRaw = await AsyncStorage.getItem(
+      const nextPlayTimeRaw = await AsyncStorage.getItem(
         crovneFishSpeedReactionStorageKeys.nextPlayAt,
       );
 
       setCrovneFishSpeedReactionUnlocked(
-        unlockedCrvneRaw ? JSON.parse(unlockedCrvneRaw) : [],
+        unlockedCurveRaw ? JSON.parse(unlockedCurveRaw) : [],
       );
-      setCrovneFishSpeedReactionNextPlayAt(timeRaw ? Number(timeRaw) : null);
+      setCrovneFishSpeedReactionNextPlayAt(
+        nextPlayTimeRaw ? Number(nextPlayTimeRaw) : null,
+      );
     })();
   }, []);
 
@@ -143,77 +148,84 @@ const DailyCrovneWallpaperScreen = () => {
     if (!crovneFishSpeedReactionLocked) return;
 
     crovneFishSpeedReactionTimerRef.current = setInterval(() => {
-      setCrovneFishSpeedReactionTick(t => t + 1);
+      setCrovneFishSpeedReactionTick(tick => tick + 1);
     }, 1000);
 
     return () => clearInterval(crovneFishSpeedReactionTimerRef.current);
   }, [crovneFishSpeedReactionLocked]);
 
-  const crovneFishSpeedReactionResetAttemptsWithShuffle = () => {
+  const resetFishSpeedReactionAttemptsWithShuffle = () => {
     setCrovneFishSpeedReactionAttemptsLeft(2);
     setCrovneFishSpeedReactionDeck(crovneFishSpeedReactionBuildDeck());
     setCrovneFishSpeedReactionRevealed([]);
     setCrovneFishSpeedReactionBusy(false);
   };
 
-  const crovneFishSpeedReactionResetAfterWin = () => {
+  const resetFishSpeedReactionAfterWin = () => {
     setCrovneFishSpeedReactionAttemptsLeft(2);
     setCrovneFishSpeedReactionRevealed([]);
     setCrovneFishSpeedReactionBusy(false);
   };
 
-  const crovneFishSpeedReactionLockFor24h = async () => {
-    const ts = Date.now() + 24 * 60 * 60 * 1000;
-    setCrovneFishSpeedReactionNextPlayAt(ts);
+  const lockFishSpeedReactionFor24h = async () => {
+    const nextPlayTimestamp = Date.now() + 24 * 60 * 60 * 1000;
+
+    setCrovneFishSpeedReactionNextPlayAt(nextPlayTimestamp);
+
     await AsyncStorage.setItem(
       crovneFishSpeedReactionStorageKeys.nextPlayAt,
-      String(ts),
+      String(nextPlayTimestamp),
     );
   };
 
-  const crovneFishSpeedReactionUnlockWallpaper = async fishId => {
+  const unlockFishSpeedReactionWallpaper = async fishId => {
     if (crovneFishSpeedReactionUnlocked.includes(fishId)) return;
 
-    const next = [...crovneFishSpeedReactionUnlocked, fishId];
-    setCrovneFishSpeedReactionUnlocked(next);
+    const updatedUnlockedWallpapers = [
+      ...crovneFishSpeedReactionUnlocked,
+      fishId,
+    ];
+    setCrovneFishSpeedReactionUnlocked(updatedUnlockedWallpapers);
 
     await AsyncStorage.setItem(
       crovneFishSpeedReactionStorageKeys.unlocked,
-      JSON.stringify(next),
+      JSON.stringify(updatedUnlockedWallpapers),
     );
   };
 
-  const crovneFishSpeedReactionOnPressCard = async key => {
+  const handleFishSpeedReactionCardPress = async key => {
     if (crovneFishSpeedReactionLocked || crovneFishSpeedReactionBusy) return;
 
     if (crovneFishSpeedReactionRevealed.includes(key)) return;
 
     if (crovneFishSpeedReactionRevealed.length === 3) return;
 
-    const next = [...crovneFishSpeedReactionRevealed, key];
-    setCrovneFishSpeedReactionRevealed(next);
+    const nextRevealed = [...crovneFishSpeedReactionRevealed, key];
+    setCrovneFishSpeedReactionRevealed(nextRevealed);
 
-    if (next.length === 3) {
+    if (nextRevealed.length === 3) {
       setCrovneFishSpeedReactionBusy(true);
 
-      const cards = next.map(k =>
+      const selectedCards = nextRevealed.map(k =>
         crovneFishSpeedReactionDeck.find(c => c.key === k),
       );
-      const ids = cards.map(c => c.fishId);
-      const win = ids.every(id => id === ids[0]);
 
-      if (win) {
-        await crovneFishSpeedReactionUnlockWallpaper(ids[0]);
-        await crovneFishSpeedReactionLockFor24h();
-        setCrovneFishSpeedReactionWonFishId(ids[0]);
+      const fishIds = selectedCards.map(card => card.fishId);
+
+      const isWin = fishIds.every(id => id === fishIds[0]);
+
+      if (isWin) {
+        await unlockFishSpeedReactionWallpaper(fishIds[0]);
+        await lockFishSpeedReactionFor24h();
+        setCrovneFishSpeedReactionWonFishId(fishIds[0]);
         setCrovneFishSpeedReactionWinModal(true);
       } else {
-        setCrovneFishSpeedReactionAttemptsLeft(prev => {
-          const nextAttempts = prev - 1;
+        setCrovneFishSpeedReactionAttemptsLeft(prevAttempts => {
+          const nextAttempts = prevAttempts - 1;
 
           setTimeout(() => {
             if (nextAttempts <= 0) {
-              crovneFishSpeedReactionResetAttemptsWithShuffle();
+              resetFishSpeedReactionAttemptsWithShuffle();
             } else {
               setCrovneFishSpeedReactionRevealed([]);
               setCrovneFishSpeedReactionBusy(false);
@@ -261,8 +273,8 @@ const DailyCrovneWallpaperScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               Wallpapers
@@ -285,8 +297,8 @@ const DailyCrovneWallpaperScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
                 marginBottom: 8,
                 textAlign: 'center',
                 marginTop: 60,
@@ -302,7 +314,7 @@ const DailyCrovneWallpaperScreen = () => {
                 alignSelf: 'center',
                 borderRadius: 22,
                 borderWidth: 1,
-                borderColor: '#FFD34C',
+                borderColor: mainYellow,
                 paddingVertical: 24,
                 alignItems: 'center',
                 marginTop: 40,
@@ -311,8 +323,8 @@ const DailyCrovneWallpaperScreen = () => {
               <Text
                 style={{
                   fontSize: 24,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#FFF',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                 }}
               >
                 {crovneFishSpeedReactionFormatHMS(
@@ -328,8 +340,8 @@ const DailyCrovneWallpaperScreen = () => {
                 style={{
                   textAlign: 'center',
                   fontSize: 24,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#FFF',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                   marginBottom: 24,
                   marginTop: 60,
                 }}
@@ -363,16 +375,14 @@ const DailyCrovneWallpaperScreen = () => {
                         marginBottom: 10,
                       }}
                       activeOpacity={0.85}
-                      onPress={() =>
-                        crovneFishSpeedReactionOnPressCard(card.key)
-                      }
+                      onPress={() => handleFishSpeedReactionCardPress(card.key)}
                     >
                       <View
                         style={{
                           flex: 1,
                           borderRadius: 20,
                           borderWidth: 1.5,
-                          borderColor: '#FFD34C',
+                          borderColor: mainYellow,
                           backgroundColor: '#000',
                           justifyContent: 'center',
                           alignItems: 'center',
@@ -391,8 +401,8 @@ const DailyCrovneWallpaperScreen = () => {
                           <Text
                             style={{
                               fontSize: 30,
-                              fontFamily: 'Montserrat-SemiBold',
-                              color: '#FFD34C',
+                              fontFamily: fontSB,
+                              color: mainYellow,
                             }}
                           ></Text>
                         )}
@@ -447,7 +457,7 @@ const DailyCrovneWallpaperScreen = () => {
                 width: '85%',
                 borderRadius: 24,
                 borderWidth: 2,
-                borderColor: '#FFD34C',
+                borderColor: mainYellow,
                 backgroundColor: '#000',
                 paddingTop: 18,
                 alignItems: 'center',
@@ -456,8 +466,8 @@ const DailyCrovneWallpaperScreen = () => {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#fff',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                   marginBottom: 14,
                   textAlign: 'center',
                 }}
@@ -468,13 +478,13 @@ const DailyCrovneWallpaperScreen = () => {
               <Text
                 style={{
                   fontSize: 15,
-                  fontFamily: 'Montserrat-Regular',
-                  color: '#fff',
+                  fontFamily: fontR,
+                  color: mainWhite,
                   textAlign: 'center',
                   marginBottom: 20,
                 }}
               >
-                You have received the collection wallpapers. You can view and
+                You have received the collection wallpapers! You can view and
                 download them in the "Collection" section
               </Text>
 
@@ -488,7 +498,7 @@ const DailyCrovneWallpaperScreen = () => {
                 <CrovneButton
                   onPress={() => {
                     setCrovneFishSpeedReactionWinModal(false);
-                    crovneFishSpeedReactionResetAfterWin();
+                    resetFishSpeedReactionAfterWin();
                   }}
                 >
                   <Image source={require('../../assets/images/backCard.png')} />
@@ -516,7 +526,7 @@ const DailyCrovneWallpaperScreen = () => {
                     <Text
                       style={{
                         fontSize: 18,
-                        fontFamily: 'Montserrat-SemiBold',
+                        fontFamily: fontSB,
                         color: '#000',
                       }}
                     >

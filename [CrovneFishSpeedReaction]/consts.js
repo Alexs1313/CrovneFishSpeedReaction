@@ -1,37 +1,18 @@
-import React from 'react';
-import { WebView as CrovneWebView } from 'react-native-webview';
-import { View, StyleSheet, Image as CrovneImage } from 'react-native';
-import ScrollWrapper from './ScrollWrapper';
+export const GRADIENT_COLORS = [
+  '#FFD300',
+  '#FFFF8A',
+  '#FFF379',
+  '#FFD34C',
+  '#FFA104',
+  '#FF9E00',
+  '#F6CF5B',
+  '#EDFFB3',
+  '#F4FA86',
+  '#FFF240',
+  '#FFFF8A',
+];
 
-const WelcomeLoader = () => {
-  return (
-    <ScrollWrapper>
-      <View style={styles.loaderContainer}>
-        <CrovneImage source={require('../../assets/images/loaderLogo.png')} />
-
-        <View style={{ position: 'absolute', bottom: 100 }}>
-          <CrovneWebView
-            originWhitelist={['*']}
-            source={{ html: crovneLoader }}
-            style={{ width: 220, height: 10, backgroundColor: 'transparent' }}
-            scrollEnabled={false}
-          />
-        </View>
-      </View>
-    </ScrollWrapper>
-  );
-};
-
-const styles = StyleSheet.create({
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 700,
-  },
-});
-
-const crovneLoader = `
+export const welcomeHtmlLoader = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,5 +67,3 @@ const crovneLoader = `
 </body>
 </html>
 `;
-
-export default WelcomeLoader;

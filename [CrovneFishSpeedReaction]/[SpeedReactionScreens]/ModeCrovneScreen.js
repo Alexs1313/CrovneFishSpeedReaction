@@ -6,9 +6,14 @@ import {
   ScrollView as CrovneScrollWrap,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { GRADIENT_COLORS } from '../consts';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+
+import { GRADIENT_COLORS } from '../consts';
+
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
 
 const ModeCrovneScreen = () => {
   const navigation = useNavigation();
@@ -56,8 +61,8 @@ const ModeCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               Game
@@ -71,8 +76,8 @@ const ModeCrovneScreen = () => {
           style={{
             marginTop: 70,
             fontSize: 24,
-            fontFamily: 'Montserrat-SemiBold',
-            color: '#fff',
+            fontFamily: fontSB,
+            color: mainWhite,
           }}
         >
           Choose a mode
@@ -116,8 +121,8 @@ const ModeCrovneScreen = () => {
               <Text
                 style={{
                   fontSize: 18,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#fff',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                   marginBottom: 6,
                 }}
               >
@@ -127,7 +132,7 @@ const ModeCrovneScreen = () => {
               <Text
                 style={{
                   fontSize: 13,
-                  fontFamily: 'Montserrat-Regular',
+                  fontFamily: fontR,
                   color: '#ccc',
                   lineHeight: 18,
                 }}
@@ -177,8 +182,8 @@ const ModeCrovneScreen = () => {
               <Text
                 style={{
                   fontSize: 18,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#fff',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                   marginBottom: 6,
                 }}
               >
@@ -188,7 +193,7 @@ const ModeCrovneScreen = () => {
               <Text
                 style={{
                   fontSize: 13,
-                  fontFamily: 'Montserrat-Regular',
+                  fontFamily: fontR,
                   color: '#ccc',
                   lineHeight: 18,
                 }}
@@ -229,7 +234,7 @@ const ModeCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
+                fontFamily: fontSB,
                 color: '#000',
               }}
             >

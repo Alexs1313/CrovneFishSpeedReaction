@@ -1,27 +1,25 @@
-import { NavigationContainer as CrovneFishNavigation } from '@react-navigation/native';
-import {
-  useEffect as useCrovneEffect,
-  useState as useCrovneState,
-} from 'react';
-import { StoreProvider } from './CrovneFishSpeedReaction/CrovneFishSpeedReactionStore/context';
-import StackNavigation from './CrovneFishSpeedReaction/CrovneFishSpeedReactionNv/StackNavigation';
-import WelcomeLoader from './CrovneFishSpeedReaction/CrovneFishSpeedReactionCmpnts/WelcomeLoader';
+import { NavigationContainer } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { StoreProvider } from './[CrovneFishSpeedReaction]/[FishSpeedReactionStore]/context';
+import StackNavigation from './[CrovneFishSpeedReaction]/[FishSpeedReactionRoutes]/StackNavigation';
+import WelcomeLoader from './[CrovneFishSpeedReaction]/[CrovneFishComponents]/WelcomeLoader';
 
 const App = () => {
-  const [isLoading, setIsLoading] = useCrovneState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useCrovneEffect(() => {
+  // effect loader
+  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 6000);
   }, []);
 
   return (
-    <CrovneFishNavigation>
+    <NavigationContainer>
       <StoreProvider>
         {isLoading ? <WelcomeLoader /> : <StackNavigation />}
       </StoreProvider>
-    </CrovneFishNavigation>
+    </NavigationContainer>
   );
 };
 

@@ -9,13 +9,15 @@ export const StoreProvider = ({ children }) => {
     useState([]);
 
   const crovneFishSpeedReactionLoadWallpapers = async () => {
-    const crovneFishSpeedReactionRaw = await AsyncStorage.getItem(
-      'crovne_unlocked_wallpapers',
-    );
-
-    setCrovneFishSpeedReactionUnlocked(
-      crovneFishSpeedReactionRaw ? JSON.parse(crovneFishSpeedReactionRaw) : [],
-    );
+    try {
+      const rawWallpapers = await AsyncStorage.getItem(
+        'crovne_unlocked_wallpapers',
+      );
+      const unlockedWallpapers = rawWallpapers ? JSON.parse(rawWallpapers) : [];
+      setCrovneFishSpeedReactionUnlocked(unlockedWallpapers);
+    } catch (error) {
+      console.error('Failed to load wallpapers:', error);
+    }
   };
 
   const contextValue = {

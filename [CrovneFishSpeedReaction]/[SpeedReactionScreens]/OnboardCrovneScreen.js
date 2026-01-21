@@ -5,11 +5,15 @@ import {
   TouchableOpacity as CrovneButton,
   View as CrovneView,
 } from 'react-native';
-import ScrollWrapper from '../CrovneFishSpeedReactionCmpnts/ScrollWrapper';
+import ScrollWrapper from '../[CrovneFishComponents]/ScrollWrapper';
 import LinearGradient from 'react-native-linear-gradient';
 import { GRADIENT_COLORS } from '../consts';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
 
 const OnboardCrovneScreen = () => {
   const [currentCrovneIndex, setCurrentCrovneIndex] = useState(0);
@@ -30,8 +34,8 @@ const OnboardCrovneScreen = () => {
         <CrovneText
           style={{
             fontSize: 24,
-            fontFamily: 'Montserrat-SemiBold',
-            color: '#fff',
+            fontFamily: fontSB,
+            color: mainWhite,
             marginTop: 16,
             marginBottom: 24,
           }}
@@ -96,8 +100,8 @@ const OnboardCrovneScreen = () => {
             <CrovneText
               style={{
                 fontSize: 18,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
                 paddingVertical: 12,
                 paddingHorizontal: 24,
                 textAlign: 'center',
@@ -113,8 +117,8 @@ const OnboardCrovneScreen = () => {
             <CrovneText
               style={{
                 fontSize: 14,
-                fontFamily: 'Montserrat-Regular',
-                color: '#fff',
+                fontFamily: fontR,
+                color: mainWhite,
                 paddingBottom: 16,
                 paddingHorizontal: 24,
                 textAlign: 'center',
@@ -157,7 +161,7 @@ Test your luck every day and unlock collectible wallpapers.`}
                 <CrovneText
                   style={{
                     fontSize: 18,
-                    fontFamily: 'Montserrat-SemiBold',
+                    fontFamily: fontSB,
                     color: '#000',
                   }}
                 >

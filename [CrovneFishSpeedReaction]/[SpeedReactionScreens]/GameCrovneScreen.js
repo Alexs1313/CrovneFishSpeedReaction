@@ -13,6 +13,11 @@ import { GRADIENT_COLORS } from '../consts';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const mainYellow = '#FFD34C';
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
+
 const crovneFishSpeedReactionFishes = [
   require('../../assets/images/crovneFish1.png'),
   require('../../assets/images/crovneFish2.png'),
@@ -161,8 +166,8 @@ const GameCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               Game
@@ -190,7 +195,7 @@ const GameCrovneScreen = () => {
                   height: 260,
                   borderRadius: 28,
                   borderWidth: 2,
-                  borderColor: '#FFD34C',
+                  borderColor: mainYellow,
                   justifyContent: 'center',
                   alignItems: 'center',
                   paddingHorizontal: 16,
@@ -238,7 +243,7 @@ const GameCrovneScreen = () => {
                   <Text
                     style={{
                       fontSize: 20,
-                      fontFamily: 'Montserrat-SemiBold',
+                      fontFamily: fontSB,
                       color: '#000',
                     }}
                   >
@@ -269,8 +274,8 @@ const GameCrovneScreen = () => {
                   <Text
                     style={{
                       fontSize: 24,
-                      fontFamily: 'Montserrat-SemiBold',
-                      color: '#fff',
+                      fontFamily: fontSB,
+                      color: mainWhite,
                       marginBottom: 20,
                       textAlign: 'center',
                     }}
@@ -281,8 +286,8 @@ const GameCrovneScreen = () => {
                   <Text
                     style={{
                       fontSize: 15,
-                      fontFamily: 'Montserrat-Regular',
-                      color: '#fff',
+                      fontFamily: fontR,
+                      color: mainWhite,
                       textAlign: 'center',
                       marginBottom: 30,
                     }}
@@ -332,7 +337,7 @@ const GameCrovneScreen = () => {
                 <Text
                   style={{
                     fontSize: 14,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: fontR,
                     color: '#ccc',
                     textAlign: 'center',
                     marginBottom: 30,
@@ -344,8 +349,8 @@ const GameCrovneScreen = () => {
                 <Text
                   style={{
                     fontSize: 32,
-                    fontFamily: 'Montserrat-SemiBold',
-                    color: '#fff',
+                    fontFamily: fontSB,
+                    color: mainWhite,
                     textAlign: 'center',
                     marginBottom: 20,
                   }}
@@ -371,7 +376,7 @@ const GameCrovneScreen = () => {
                     <Text
                       style={{
                         fontSize: 18,
-                        fontFamily: 'Montserrat-SemiBold',
+                        fontFamily: fontSB,
                         color: '#000',
                       }}
                     >

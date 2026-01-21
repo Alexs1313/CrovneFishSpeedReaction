@@ -6,12 +6,18 @@ import {
   Image,
   Share,
   ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { GRADIENT_COLORS } from '../consts';
+
+const mainYellow = '#FFD34C';
+const fontR = 'Montserrat-Regular';
+const fontSB = 'Montserrat-SemiBold';
+const mainWhite = '#FFFFFF';
 
 const crovneFishSpeedReactionStorage = {
   solo: 'crovne_best_reaction',
@@ -71,8 +77,8 @@ const StatsCrovneScreen = () => {
     setCrovneFishSpeedReactionPartyList(list);
   };
 
-  const crovneFishSpeedReactionShareText = text => {
-    Share.share({ message: text });
+  const crovneFishSpeedReactionShareText = message => {
+    Share.share({ message });
   };
 
   const crovneFishSpeedReactionClearSolo = async () => {
@@ -89,26 +95,8 @@ const StatsCrovneScreen = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <LinearGradient
-          colors={GRADIENT_COLORS}
-          style={{
-            width: '95%',
-            borderRadius: 22,
-            alignSelf: 'center',
-            marginBottom: 24,
-          }}
-        >
-          <CrovneMainBox
-            style={{
-              backgroundColor: '#000',
-              margin: 1,
-              borderRadius: 21,
-              padding: 14,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
+        <LinearGradient colors={GRADIENT_COLORS} style={styles.gradientBack}>
+          <CrovneMainBox style={styles.head}>
             <TouchableOpacity
               onPress={() => crovneFishSpeedReactionNavigation.goBack()}
             >
@@ -117,8 +105,8 @@ const StatsCrovneScreen = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: 'Montserrat-SemiBold',
-                color: '#fff',
+                fontFamily: fontSB,
+                color: mainWhite,
               }}
             >
               Statistics
@@ -143,7 +131,7 @@ const StatsCrovneScreen = () => {
                 height: 62,
                 borderRadius: 22,
                 borderWidth: 1,
-                borderColor: '#FFD34C',
+                borderColor: mainYellow,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginHorizontal: 6,
@@ -152,9 +140,10 @@ const StatsCrovneScreen = () => {
             >
               <Text
                 style={{
-                  fontFamily: 'Montserrat-SemiBold',
+                  fontFamily: fontSB,
                   fontSize: 20,
-                  color: crovneFishSpeedReactionMode === v ? '#fff' : '#9D8202',
+                  color:
+                    crovneFishSpeedReactionMode === v ? mainWhite : '#9D8202',
                 }}
               >
                 {v === 'solo' ? 'Solo mode' : 'Party mode'}
@@ -165,22 +154,12 @@ const StatsCrovneScreen = () => {
 
         {crovneFishSpeedReactionMode === 'solo' && (
           <>
-            <CrovneMainBox
-              style={{
-                width: '90%',
-                alignSelf: 'center',
-                borderRadius: 23,
-                borderWidth: 1,
-                borderColor: '#FFD34C',
-                paddingVertical: 24,
-                marginBottom: 20,
-              }}
-            >
+            <CrovneMainBox style={styles.bestResWrap}>
               <Text
                 style={{
                   fontSize: 14,
-                  fontFamily: 'Montserrat-Regular',
-                  color: '#fff',
+                  fontFamily: fontR,
+                  color: mainWhite,
                   textAlign: 'center',
                   marginBottom: 12,
                 }}
@@ -190,8 +169,8 @@ const StatsCrovneScreen = () => {
               <Text
                 style={{
                   fontSize: 34,
-                  fontFamily: 'Montserrat-SemiBold',
-                  color: '#fff',
+                  fontFamily: fontSB,
+                  color: mainWhite,
                   textAlign: 'center',
                 }}
               >
@@ -203,52 +182,16 @@ const StatsCrovneScreen = () => {
             </CrovneMainBox>
 
             {!crovneFishSpeedReactionSoloBest && (
-              <Text
-                style={{
-                  marginTop: 60,
-                  textAlign: 'center',
-                  fontFamily: 'Montserrat-Regular',
-                  fontSize: 20,
-                  color: '#fff',
-                }}
-              >
-                No data...
-              </Text>
+              <Text style={styles.noDataText}>No data...</Text>
             )}
 
             {crovneFishSpeedReactionSoloBest && (
-              <CrovneMainBox
-                style={{
-                  width: '90%',
-                  alignSelf: 'center',
-                  borderRadius: 23,
-                  borderWidth: 2,
-                  borderColor: '#FFD34C',
-                  paddingTop: 10,
-                  marginBottom: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontFamily: 'Montserrat-Regular',
-                    color: '#fff',
-                    textAlign: 'center',
-                    marginBottom: 40,
-                  }}
-                >
+              <CrovneMainBox style={styles.dateBox}>
+                <Text style={styles.dateBoxText}>
                   {crovneFishSpeedReactionSoloBest.date}
                 </Text>
 
-                <Text
-                  style={{
-                    fontSize: 26,
-                    fontFamily: 'Montserrat-SemiBold',
-                    color: '#fff',
-                    textAlign: 'center',
-                    marginBottom: 38,
-                  }}
-                >
+                <Text style={styles.dateBoxTextSub}>
                   {crovneFishSpeedReactionSoloBest.bestTime.toFixed(3)} sec.
                 </Text>
 
@@ -270,17 +213,12 @@ const StatsCrovneScreen = () => {
                   >
                     <ImageBackground
                       source={require('../../assets/images/shareButton.png')}
-                      style={{
-                        width: 165,
-                        height: 44,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
+                      style={styles.shareBtn}
                     >
                       <Text
                         style={{
                           fontSize: 18,
-                          fontFamily: 'Montserrat-SemiBold',
+                          fontFamily: fontSB,
                           color: '#000',
                         }}
                       >
@@ -310,7 +248,7 @@ const StatsCrovneScreen = () => {
                   alignSelf: 'center',
                   borderRadius: 22,
                   borderWidth: 1,
-                  borderColor: '#FFD34C',
+                  borderColor: mainYellow,
                   padding: 22,
                   marginBottom: 14,
                   flexDirection: 'row',
@@ -332,18 +270,7 @@ const StatsCrovneScreen = () => {
                       }}
                     />
                   ) : (
-                    <CrovneMainBox
-                      style={{
-                        width: 54,
-                        height: 54,
-                        borderRadius: 12,
-                        borderWidth: 0.5,
-                        borderColor: '#FFD34C',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: 10,
-                      }}
-                    >
+                    <CrovneMainBox style={styles.crownIndexBox}>
                       <Text
                         style={{
                           fontFamily: 'Montserrat-SemiBold',
@@ -357,33 +284,21 @@ const StatsCrovneScreen = () => {
                   )}
                   <Text
                     style={{
-                      fontFamily: 'Montserrat-SemiBold',
+                      fontFamily: fontSB,
                       fontSize: 20,
-                      color: '#fff',
+                      color: mainWhite,
                     }}
                   >
                     {p.name}
                   </Text>
                 </CrovneMainBox>
 
-                <CrovneMainBox
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#FFD34C',
-                    borderRadius: 14,
-                    paddingVertical: 9,
-                    paddingHorizontal: 12,
-                    minWidth: 100,
-                    minHeight: 53,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <CrovneMainBox style={styles.crownBestTimeBox}>
                   <Text
                     style={{
-                      fontFamily: 'Montserrat-SemiBold',
+                      fontFamily: fontSB,
                       fontSize: 15,
-                      color: '#fff',
+                      color: mainWhite,
                     }}
                   >
                     {p.bestTime !== null
@@ -411,19 +326,13 @@ const StatsCrovneScreen = () => {
               >
                 <LinearGradient
                   colors={GRADIENT_COLORS}
-                  style={{
-                    width: 260,
-                    height: 70,
-                    borderRadius: 22,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
+                  style={styles.shareBtnBott}
                   start={{ x: 0.6, y: 1.8 }}
                   end={{ x: 0.7, y: 0 }}
                 >
                   <Text
                     style={{
-                      fontFamily: 'Montserrat-SemiBold',
+                      fontFamily: fontSB,
                       fontSize: 22,
                       color: '#000',
                     }}
@@ -439,5 +348,96 @@ const StatsCrovneScreen = () => {
     </CrovneMainBox>
   );
 };
+
+const styles = StyleSheet.create({
+  head: {
+    backgroundColor: '#000',
+    margin: 1,
+    borderRadius: 21,
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  gradientBack: {
+    width: '95%',
+    borderRadius: 22,
+    alignSelf: 'center',
+    marginBottom: 24,
+  },
+  bestResWrap: {
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 23,
+    borderWidth: 1,
+    borderColor: mainYellow,
+    paddingVertical: 24,
+    marginBottom: 20,
+  },
+  noDataText: {
+    marginTop: 60,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 20,
+    color: '#fff',
+  },
+  dateBox: {
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 23,
+    borderWidth: 2,
+    borderColor: mainYellow,
+    paddingTop: 10,
+    marginBottom: 20,
+  },
+  dateBoxText: {
+    fontSize: 13,
+    fontFamily: 'Montserrat-Regular',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+  dateBoxTextSub: {
+    fontSize: 26,
+    fontFamily: 'Montserrat-SemiBold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 38,
+  },
+  shareBtn: {
+    width: 165,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  crownIndexBox: {
+    width: 54,
+    height: 54,
+    borderRadius: 12,
+    borderWidth: 0.5,
+    borderColor: mainYellow,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  crownBestTimeBox: {
+    borderWidth: 1,
+    borderColor: mainYellow,
+    borderRadius: 14,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    minWidth: 100,
+    minHeight: 53,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  shareBtnBott: {
+    width: 260,
+    height: 70,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default StatsCrovneScreen;
